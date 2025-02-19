@@ -16,7 +16,7 @@ const Sidebar = ({ user }: SiderbarProps) => {
             <Link href="/"
                 className='mb-12 cursor-pointer items-center gap-2'>
                     <Image
-                        src="/icons/logo.svg"
+                        src="/icons/lgo.svg"
                         width={34}
                         height={34}
                         alt='Dissertation Logo'
@@ -35,7 +35,7 @@ const Sidebar = ({ user }: SiderbarProps) => {
                        </Link>
                     )
                 })}
-                
+                {/* time-1.00.36*/}
         </nav>
     </section>
   )

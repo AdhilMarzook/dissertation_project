@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   title: "Dissertation Project",
   description: "Dissertation Project Prototype",
   icons: {
-    icon: '/icons/logo.svg'
+    icon: '/icons/lgo.svg'
   }
 };
 
