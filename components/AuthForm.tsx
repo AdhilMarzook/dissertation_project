@@ -3,34 +3,28 @@
 import Link from 'next/link'
 import React, { useState } from 'react'
 import Image from 'next/image'
-
 import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
-
 import { Button } from "@/components/ui/button"
-import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
+import { Form } from "@/components/ui/form"
 import CustomInput from './CustomInput';
 import { authFormSchema } from '@/lib/utils';
+import { Loader2 } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 
 
 
 const AuthForm = ({ type}: {type: string}) => {
-
+    const router = useRouter();
     const [user, setUser] = useState(null);
+    const [isLoading, setIsLoading] = useState(false);
+
+    const formSchema = authFormSchema(type);
 
     // 1. Define your form.
-  const form = useForm<z.infer<typeof authFormSchema>>({
-    resolver: zodResolver(authFormSchema),
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
     defaultValues: {
       email: "",
       password:"",
@@ -38,10 +32,27 @@ const AuthForm = ({ type}: {type: string}) => {
   })
  
   // 2. Define a submit handler.
-  function onSubmit(values: z.infer<typeof authFormSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values)
+  const onSubmit = async(data: z.infer<typeof formSchema>) => {
+  
+    setIsLoading(true);
+    try{
+        if(type === 'sign-up'){
+            //const newUser = await signUp(data);
+
+            //setUser(newUser);
+        }
+        if (type === 'sign-in'){
+           // const response = await signIn({
+           //     email: data.email,
+           //     password: data.password,
+           // })
+           // if(response) rounter.push('/')
+        }
+    } catch (error) {
+        console.log(error);
+    }finally {
+        setIsLoading(false);
+    }
   }
 
   return (
@@ -83,7 +94,48 @@ const AuthForm = ({ type}: {type: string}) => {
             <>
              <Form {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-                    
+                    {type === 'sign-up' && (
+                        <>
+                            <div className='flex gap-5'>
+                            <CustomInput 
+                            control={form.control} name='firstName'
+                            label='First Name' placeholder='Enter your first name'
+                            />
+                            <CustomInput 
+                            control={form.control} name='lastName'
+                            label='Last Name' placeholder='Enter your last name'
+                            />
+                            </div>
+                            <CustomInput 
+                            control={form.control} name='address1'
+                            label='Address' placeholder='Enter your address'
+                            />
+                            <CustomInput 
+                            control={form.control} name='city'
+                            label='City' placeholder='Enter your city'
+                            />
+                            <div className='flex gap-5'>
+                            <CustomInput 
+                            control={form.control} name='county'
+                            label='County' placeholder='Example: Staffordshire'
+                            />
+                            <CustomInput 
+                            control={form.control} name='postalCode'
+                            label='Post Code' placeholder='Example: ST4 2EU'
+                            />
+                            </div>
+                            <div className='flex gap-5'>
+                            <CustomInput 
+                            control={form.control} name='dateOfBirth'
+                            label='Date of Birth' placeholder='YYYY-MM-DD'
+                            />
+                            <CustomInput 
+                            control={form.control} name='nin'
+                            label='NIN' placeholder='Example: AB123456A'
+                            />
+                            </div>
+                        </>
+                    )}
                     <CustomInput 
                         control={form.control} name='email'
                         label='Email' placeholder='Enter your Email'
@@ -92,10 +144,35 @@ const AuthForm = ({ type}: {type: string}) => {
                         control={form.control} name='password'
                         label='Password' placeholder='Enter your password'
                     />
-                    {/*time 2.06.06*/}
-                    <Button type="submit">Submit</Button>
+                    <div className='flex flex-col gap-5'>
+                    <Button type="submit" className='form-btn' disabled={isLoading}>
+                        {isLoading ? (
+                            <>
+                                <Loader2 size={25}
+                                className='animate-spin' /> &nbsp;
+                                Loading...
+                            </>
+                        ): type === 'sign-in'
+                            ? 'Sign in'
+                            : 'Sign up'
+                        
+                        }</Button>
+                        </div>
                 </form>
                 </Form>
+                <footer className='flex justify-center gap-2'>
+                    <p className='text-15'>{type === 'sign-in'
+                        ? 'Don\'t have an account?'
+                        : 'Already have an account?'}
+
+                    </p>
+                    <Link href={type === 'sign-in' ? '/sign-up' : '/sign-in'} className='form-link'>
+                        {type === 'sign-in'
+                            ? 'Sign up'
+                            : 'Sign in'}
+                    </Link>
+                </footer>
+
             </>
         )}
     </section>
