@@ -5,9 +5,14 @@ import { createAdminClient, createSessionClient } from "../appwrite";
 import { cookies } from "next/headers";
 import { parseStringify } from "../utils";
 
-export const signIn = async() => {
+export const signIn = async( {email, password}: signInProps) => {
     try {
-        //mutation time 3.04.53
+        const { account } = await createAdminClient();
+
+        const response = await account.
+        createEmailPasswordSession(email, password);
+
+        return parseStringify(response);
     } catch (error) {
         console.error('Error',error);
     }
@@ -47,3 +52,15 @@ export async function getLoggedInUser() {
     }
   }
   
+
+export const logoutAccount = async () => {
+    try {
+        const { account } = await createSessionClient();
+
+        (await cookies()).delete(`appwrite-session`);
+        await account.deleteSession('current');
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    } catch (error) {
+        return null;
+    }
+}
