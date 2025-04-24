@@ -166,13 +166,15 @@ export const getTransactions = async ({
   try {
     // Iterate through each page of new transaction updates for item
     while (hasMore) {
-      console.log('Access Token:', accessToken);
+      //checking whether the token in working
+      //console.log('Access Token:', accessToken);
       if(!accessToken) throw new Error('Access Token is undefined');
       const response = await plaidClient.transactionsSync({
         access_token: accessToken,
         
       });
-      console.log('Plaid Response:', response);
+      //plaid response if there is an error to check
+      //console.log('Plaid Response:', response);
       const data = response.data;
       
       

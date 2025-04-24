@@ -142,8 +142,8 @@ export const createLinkToken = async (user: User) => {
             language: 'en',
             country_codes: ['US'] as CountryCode[],
         }
-
-        console.log('Plaid tokenParams:', tokenParams);
+        //to check what services are used from plaid
+        //console.log('Plaid tokenParams:', tokenParams);
         const response = await plaidClient.linkTokenCreate(tokenParams);
 
         return parseStringify({ linkToken: response.data.link_token })

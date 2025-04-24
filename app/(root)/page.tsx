@@ -22,10 +22,11 @@ const Home = async ({ searchParams }: SearchParamProps) => {
 
     const account = await getAccount({ appwriteItemId})
 
-    console.log({
-        accountsData,
-        account
-    })
+    // //details of the account shown in terminal
+    // console.log({
+    //     accountsData,
+    //     account
+    // })
 
     return (
     <section className='home'>

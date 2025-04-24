@@ -1,38 +1,65 @@
-'use client'
-import React from 'react'
-import { Chart as ChartJS, ArcElement, Tooltip, Legend} from "chart.js"
+'use client';
+
+import React from 'react';
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Doughnut } from 'react-chartjs-2';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
+type Account = {
+  name: string;
+  currentBalance: number;
+};
+
+type DoughnutChartProps = {
+  accounts: Account[] | Account[][];
+};
+
 const DoughnutChart = ({ accounts }: DoughnutChartProps) => {
+  // Flatten the array in case it's nested
+  const flatAccounts = Array.isArray(accounts[0]) ? (accounts as Account[][]).flat() : (accounts as Account[]);
 
-    const accountNames = accounts.map((a) => a.name);
-    const balances = accounts.map((a) => a.currentBalance);
+  const accountNames = flatAccounts.map((a) => a.name);
+  const balances = flatAccounts.map((a) => a.currentBalance);
 
-    const data = {
-        datasets: [
-            {
-                label: 'Banks',
-                data: balances,
-                backgroundColor: ['#0747b6', '#2265d8', '#2f91fa']
-            }
-        ],
-        labels: accountNames
-    }
+  //console.log('Doughnut chart Accounts:', flatAccounts);
 
-  return <Doughnut data={data} 
-        options={{
-            cutout: '60%',
-            plugins: {
-                legend:{
-                    display: false
-                }
-            }
-        }}
-  />
-    
-  
-}
+  const data = {
+    datasets: [
+      {
+        label: 'Balance',
+        data: balances,
+        backgroundColor: [
+            '#FF6384',
+            '#36A2EB',
+            '#FFCE56',
+            '#4BC0C0',
+            '#9966FF',
+            '#FF9F40',
+            '#8DD1E1',
+            '#FF7F7F',
+            '#B2FF59',
+            '#D4A5A5',
+          ]
+          
+      },
+    ],
+    labels: accountNames,
+  };
 
-export default DoughnutChart
+  return (
+    <Doughnut
+      data={data}
+      options={{
+        cutout: '60%',
+        plugins: {
+          legend: {
+            display: false,
+          },
+        },
+      }}
+    />
+  );
+};
+
+export default DoughnutChart;
