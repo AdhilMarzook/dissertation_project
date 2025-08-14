@@ -59,7 +59,7 @@ The application follows a **service-oriented architecture (SOA)** pattern 🧠:
 ### 1️⃣ Clone Repository 📂
 ```bash
 git clone https://github.com/adhilmarzook/financial-management-microservices.git
-cd financial-management-microservices
+cd financial-management-microservices](https://github.com/AdhilMarzook/dissertation_project.git
 ```
 
 ### 2️⃣ Install Dependencies 📦
