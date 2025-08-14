@@ -94,6 +94,6 @@ This project investigates:
 
 ## 📬 Contact 🤝
 **Author:** Adhil Marzook  
-**LinkedIn:** [Your LinkedIn URL](https://www.linkedin.com/in/adhil-marzook-8a594118b]  
+**LinkedIn:** [https://www.linkedin.com/in/adhil-marzook-8a594118b]  
 **GitHub:** [https://github.com/adhilmarzook](https://github.com/adhilmarzook)
 
